@@ -1,0 +1,21 @@
+name: spindle_detector
+channels:
+- defaults
+- conda-forge
+- edeno
+dependencies:
+- "python>=3.6"
+- hmmlearn
+- numpy
+- numba
+- scipy
+- xarray
+- scikit-learn
+- matplotlib
+- spectral_connectivity
+- jupyter
+- nb_conda
+- setuptools
+- pytest
+- pytest-cov
+- coveralls
