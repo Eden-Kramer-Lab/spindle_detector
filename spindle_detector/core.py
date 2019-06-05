@@ -31,6 +31,7 @@ def detect_spindle(time, lfps, sampling_frequency,
         atleast_2d(lfps), sampling_frequency, start_time=time[0],
         multitaper_params=multitaper_params, spindle_band=spindle_band)
     spindle_band_power = spindle_band_power.reshape((power_time.shape[0], -1))
+
     startprob_prior = np.log(np.array([np.spacing(1), 1.0 - np.spacing(1)]))
     model = hmm.GaussianHMM(n_components=2, covariance_type='full',
                             startprob_prior=startprob_prior, n_iter=100,
@@ -38,7 +39,6 @@ def detect_spindle(time, lfps, sampling_frequency,
     model = model.fit(np.log(spindle_band_power))
 
     state_ind = model.predict(np.log(spindle_band_power))
-
     if (spindle_band_power[state_ind == 0].mean() >
             spindle_band_power[state_ind == 1].mean()):
         spindle_ind = 0
