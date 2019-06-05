@@ -33,6 +33,6 @@ hash -r
 2. Go to the local repository (`.../spindle_detector`) and install the anaconda environment for the repository. Type into bash:
 ```bash
 conda env create -f environment.yml
-source activate spindle_detector
+conda activate spindle_detector # if using older anaconda, use source activate
 python setup.py develop
 ```
