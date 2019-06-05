@@ -5,6 +5,11 @@ from hmmlearn import hmm
 from spindle_detector.lfp_likelihood import (_DEFAULT_MULTITAPER_PARAMS,
                                              estimate_spindle_band_power)
 
+_startprob_prior = np.log(np.array([np.spacing(1), 1.0 - np.spacing(1)]))
+_DEFAULT_HMM_PARAMS = dict(n_components=2, covariance_type='full',
+                           startprob_prior=_startprob_prior, n_iter=100,
+                           tol=1E-6)
+
 
 def atleast_2d(x):
     return np.atleast_2d(x).T if x.ndim < 2 else x
@@ -12,6 +17,7 @@ def atleast_2d(x):
 
 def detect_spindle(time, lfps, sampling_frequency,
                    multitaper_params=_DEFAULT_MULTITAPER_PARAMS,
+                   hmm_params=_DEFAULT_HMM_PARAMS,
                    spindle_band=(10, 16)):
     '''Finds spindle times using spectral power between 10-16 Hz and an HMM.
 
@@ -20,6 +26,9 @@ def detect_spindle(time, lfps, sampling_frequency,
     time : ndarray, shape (n_time,)
     lfps : ndarray, shape (n_time, n_signals)
     sampling_frequency : float
+    multitaper_params : dict, optional
+    hmm_params : dict, optional
+    spindle_band : tuple, optional
 
     Returns
     -------
@@ -32,11 +41,7 @@ def detect_spindle(time, lfps, sampling_frequency,
         multitaper_params=multitaper_params, spindle_band=spindle_band)
     spindle_band_power = spindle_band_power.reshape((power_time.shape[0], -1))
 
-    startprob_prior = np.log(np.array([np.spacing(1), 1.0 - np.spacing(1)]))
-    model = hmm.GaussianHMM(n_components=2, covariance_type='full',
-                            startprob_prior=startprob_prior, n_iter=100,
-                            tol=1E-6)
-    model = model.fit(np.log(spindle_band_power))
+    model = hmm.GaussianHMM(**hmm_params).fit(np.log(spindle_band_power))
 
     state_ind = model.predict(np.log(spindle_band_power))
     if (spindle_band_power[state_ind == 0].mean() >
