@@ -2,6 +2,25 @@
 
 Detect spindles using an HMM
 
+### Installation ###
+`spindle_detector` can be installed through pypi or conda. Conda is the best way to ensure that everything is installed properly.
+
+```bash
+pip install spindle_detector
+python setup.py install
+```
+Or
+
+```bash
+conda install -c edeno spindle_detector
+python setup.py install
+
+
+### Usage ###
+```python
+results_df, model = detect_spindle(time, lfps, sampling_frequency)
+```
+
 ### Developer Installation ###
 1. Install miniconda (or anaconda) if it isn't already installed. Type into bash (or install from the anaconda website):
 ```bash
