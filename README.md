@@ -19,6 +19,7 @@ python setup.py install
 ### Usage ###
 ```python
 results_df, model = detect_spindle(time, lfps, sampling_frequency)
+```
 
 ### Developer Installation ###
 1. Install miniconda (or anaconda) if it isn't already installed. Type into bash (or install from the anaconda website):
