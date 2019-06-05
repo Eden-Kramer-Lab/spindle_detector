@@ -10,7 +10,7 @@ def atleast_2d(x):
     return np.atleast_2d(x).T if x.ndim < 2 else x
 
 
-def detect_spindle(time, lfp, sampling_frequency,
+def detect_spindle(time, lfps, sampling_frequency,
                    multitaper_params=_DEFAULT_MULTITAPER_PARAMS,
                    spindle_band=(10, 16)):
     '''Finds spindle times using spectral power between 10-16 Hz and an HMM.
@@ -18,7 +18,7 @@ def detect_spindle(time, lfp, sampling_frequency,
     Parameters
     ----------
     time : ndarray, shape (n_time,)
-    lfp : ndarray, shape (n_time, 1)
+    lfps : ndarray, shape (n_time, n_signals)
     sampling_frequency : float
 
     Returns
@@ -28,8 +28,9 @@ def detect_spindle(time, lfp, sampling_frequency,
 
     '''
     power_time, spindle_band_power = estimate_spindle_band_power(
-        atleast_2d(lfp), sampling_frequency, start_time=time[0],
+        atleast_2d(lfps), sampling_frequency, start_time=time[0],
         multitaper_params=multitaper_params, spindle_band=spindle_band)
+    spindle_band_power = spindle_band_power.reshape((power_time.shape[0], -1))
     startprob_prior = np.log(np.array([np.spacing(1), 1.0 - np.spacing(1)]))
     model = hmm.GaussianHMM(n_components=2, covariance_type='full',
                             startprob_prior=startprob_prior, n_iter=100)
@@ -55,8 +56,7 @@ def detect_spindle(time, lfp, sampling_frequency,
 
     spindle_probability = model.predict_proba(np.log(spindle_band_power))
     spindle_df = (pd.DataFrame(
-        dict(spindle_probability=spindle_probability[:, spindle_ind],
-             spindle_band_power=spindle_band_power.squeeze()),
+        dict(spindle_probability=spindle_probability[:, spindle_ind]),
         index=power_time)
           .reindex(index=time)
           .reset_index(drop=True)
