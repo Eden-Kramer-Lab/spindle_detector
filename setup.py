@@ -2,8 +2,8 @@
 
 from setuptools import find_packages, setup
 
-INSTALL_REQUIRES = ['numpy >= 1.14', 'statsmodels', 'numba', 'matplotlib',
-                    'xarray', 'scipy', 'scikit-learn',
+INSTALL_REQUIRES = ['numpy >= 1.14', 'matplotlib',
+                    'pandas', 'scipy', 'scikit-learn',
                     'spectral_connectivity', 'hmmlearn']
 TESTS_REQUIRE = ['pytest >= 2.7.1']
 

@@ -7,9 +7,8 @@ dependencies:
 - "python>=3.6"
 - hmmlearn
 - numpy
-- numba
 - scipy
-- xarray
+- pandas
 - scikit-learn
 - matplotlib
 - spectral_connectivity

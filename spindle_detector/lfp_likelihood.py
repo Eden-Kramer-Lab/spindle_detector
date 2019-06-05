@@ -92,5 +92,4 @@ def estimate_spindle_band_power(lfps, sampling_frequency,
     freq_ind = ((c.frequencies > spindle_band[0]) &
                 (c.frequencies < spindle_band[1]))
     power = c.power()[..., freq_ind, :].mean(axis=1).squeeze()
-    time = c.time + (m.time_window_duration / 2)
-    return time, power[:, np.newaxis]
+    return c.time, power[:, np.newaxis]
