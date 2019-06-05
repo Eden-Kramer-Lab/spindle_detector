@@ -59,9 +59,9 @@ def detect_spindle(time, lfps, sampling_frequency,
     spindle_df = (pd.DataFrame(
         dict(spindle_probability=spindle_probability[:, spindle_ind]),
         index=power_time)
-          .reindex(index=time)
-          .reset_index(drop=True)
-          .interpolate())
+        .reindex(index=time)
+        .reset_index(drop=True)
+        .interpolate())
 
     spindle_df = pd.concat((spindle_df, is_spindle), axis=1).set_index(time)
 

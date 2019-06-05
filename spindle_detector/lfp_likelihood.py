@@ -92,4 +92,5 @@ def estimate_spindle_band_power(lfps, sampling_frequency,
     freq_ind = ((c.frequencies > spindle_band[0]) &
                 (c.frequencies < spindle_band[1]))
     power = c.power()[..., freq_ind, :]
+
     return c.time, power
