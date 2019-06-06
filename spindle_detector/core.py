@@ -19,7 +19,7 @@ def detect_spindle(time, lfps, sampling_frequency,
                    multitaper_params=_DEFAULT_MULTITAPER_PARAMS,
                    hmm_params=_DEFAULT_HMM_PARAMS,
                    spindle_band=(10, 16)):
-    '''Finds spindle times using spectral power between 10-16 Hz and an HMM.
+    '''Finds spindle times using spectral power and an HMM.
 
     Parameters
     ----------
