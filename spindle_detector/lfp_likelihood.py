@@ -2,7 +2,6 @@ from functools import partial
 
 import numpy as np
 from sklearn.mixture import GaussianMixture
-
 from spectral_connectivity import Connectivity, Multitaper
 
 _DEFAULT_MULTITAPER_PARAMS = dict(time_halfbandwidth_product=1,
