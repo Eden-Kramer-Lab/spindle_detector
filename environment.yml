@@ -12,6 +12,7 @@ dependencies:
 - scikit-learn
 - matplotlib
 - spectral_connectivity
+- scipy
 - jupyter
 - nb_conda
 - setuptools
