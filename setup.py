@@ -11,7 +11,7 @@ setup(
     name='spindle_detector',
     version='0.1.0.dev0',
     license='MIT',
-    description=('Identify spindle events'),
+    description=('Identify spectral rhythm events'),
     author='',
     author_email='',
     url='https://github.com/Eden-Kramer-Lab/spindle_detector',
